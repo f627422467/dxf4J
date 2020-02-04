@@ -20,7 +20,9 @@ public class ConvertTest {
         DXFData data = null;
         List<Graphic> list = null;
         try{
+            //读取dxf文件，转化成对象
             data = parser.dxfParse(new FileInputStream(file));
+            //对基础数据进行二次处理，方便显示
             list = converter.converter(data);
         }catch (Exception e){
             e.printStackTrace();
