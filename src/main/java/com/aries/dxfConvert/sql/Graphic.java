@@ -4,7 +4,7 @@ import java.math.BigInteger;
 
 /**
  * 先做个简单的保存数据库
- * Created by tuzhiming on 2018/7/4.
+ * Created by Aries
  */
 public class Graphic {
     /**

@@ -6,7 +6,7 @@ import com.aries.dxfConvert.entities.Point;
 /**
  * 凸度对象从c#移过来，暂时没细看怎么算，命名也未修改
  * 算法误差略大，但基本可用，暂时不优化
- * Created by tuzhiming on 2018/7/4.
+ * Created by Aries
  */
 public class TuDu {
 

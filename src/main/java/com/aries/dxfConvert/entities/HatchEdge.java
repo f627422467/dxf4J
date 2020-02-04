@@ -3,7 +3,7 @@ package com.aries.dxfConvert.entities;
 import java.util.List;
 
 /**
- * Created by tuzhiming on 2018/7/3.
+ * Created by Aries
  */
 public class HatchEdge {
 

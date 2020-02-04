@@ -9,7 +9,7 @@ import com.aries.dxfConvert.geojson.Geometry;
 import java.util.*;
 
 /**
- * Created by tuzhiming on 2018/7/4.
+ * Created by Aries
  */
 public class GeoJsonConverter {
 

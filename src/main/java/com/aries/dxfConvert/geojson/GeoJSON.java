@@ -3,7 +3,7 @@ package com.aries.dxfConvert.geojson;
 import java.util.List;
 
 /**
- * Created by tuzhiming on 2018/7/4.
+ * Created by Aries
  */
 public class GeoJSON {
     private String type;

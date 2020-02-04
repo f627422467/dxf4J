@@ -3,7 +3,7 @@ package com.aries.dxfConvert.geojson;
 import com.aries.dxfConvert.entities.Point;
 
 /**
- * Created by tuzhiming on 2018/7/4.
+ * Created by Aries
  */
 public class Coordinate {
 
