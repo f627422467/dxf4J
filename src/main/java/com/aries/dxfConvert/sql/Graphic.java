@@ -72,14 +72,14 @@ public class Graphic {
     private BigInteger pointCount;
 
     /**
-     * 转换成gps点列表字符串
+     * 转换成点列表字符串
      */
-    private String gpsList;
+    private String pointList;
 
     /**
      * 转换成gcj02点列表字符串
      */
-    private String gcj02List;
+//    private String gcj02List;
 
     public Integer getType() {
         return type;
@@ -161,19 +161,11 @@ public class Graphic {
         this.pointCount = pointCount;
     }
 
-    public String getGpsList() {
-        return gpsList;
+    public String getPointList() {
+        return pointList;
     }
 
-    public void setGpsList(String gpsList) {
-        this.gpsList = gpsList;
-    }
-
-    public String getGcj02List() {
-        return gcj02List;
-    }
-
-    public void setGcj02List(String gcj02List) {
-        this.gcj02List = gcj02List;
+    public void setPointList(String pointList) {
+        this.pointList = pointList;
     }
 }

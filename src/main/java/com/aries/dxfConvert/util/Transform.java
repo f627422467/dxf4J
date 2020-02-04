@@ -33,21 +33,21 @@ public class Transform {
      */
     public static double[] LLToXY(double lon, double lat){
         double[] rst = new double[2];
-        rst[0] = 4243.168007740445;
-        rst[1] = 2373.453872738954;
+        rst[0] = lon;
+        rst[1] = lat;
         return rst;
     }
 
     /**
-     * 某坐标系转换，不公开
+     * 坐标系转换，这暂时不转化
      * @param x
      * @param y
      * @return
      */
     public static double[] XYToLL(double x, double y){
         double[] rst = new double[2];
-        rst[0] = 112.963030;
-        rst[1] = 23.568458;
+        rst[0] = x;
+        rst[1] = y;
         return rst;
     }
 

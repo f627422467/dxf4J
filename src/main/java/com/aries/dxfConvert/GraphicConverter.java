@@ -15,8 +15,7 @@ public class GraphicConverter {
 
     private static final String LLSCALEFORMAT = "%.6f";
     private static final String MAP_KEY_COUNT = "count";
-    private static final String MAP_KEY_GPS = "gps";
-    private static final String MAP_KEY_GCJ02 = "gcj02";
+    private static final String MAP_KEY_POINT = "point";
     private static final String MAP_KEY_POINTS = "list";
 
     // 多段线闭合flag值
@@ -63,9 +62,8 @@ public class GraphicConverter {
             Map<String,Object> map = parseSpline(spline);
 
             graphic.setPointCount((BigInteger)map.get(MAP_KEY_COUNT));
-            graphic.setGpsList((String)map.get(MAP_KEY_GPS));
-            graphic.setGcj02List((String)map.get(MAP_KEY_GCJ02));
-            if(StringUtils.isNotBlank(graphic.getGpsList())){
+            graphic.setPointList((String)map.get(MAP_KEY_POINT));
+            if(StringUtils.isNotBlank(graphic.getPointList())){
                 list.add(graphic);
             }
         }
@@ -88,9 +86,8 @@ public class GraphicConverter {
             Map<String,Object> map = parseEllipse(ellipse);
 
             graphic.setPointCount((BigInteger)map.get(MAP_KEY_COUNT));
-            graphic.setGpsList((String)map.get(MAP_KEY_GPS));
-            graphic.setGcj02List((String)map.get(MAP_KEY_GCJ02));
-            if(StringUtils.isNotBlank(graphic.getGpsList())){
+            graphic.setPointList((String)map.get(MAP_KEY_POINT));
+            if(StringUtils.isNotBlank(graphic.getPointList())){
                 list.add(graphic);
             }
         }
@@ -112,9 +109,8 @@ public class GraphicConverter {
             graphic.setType(Graphic.GRAPHIC_TYPE_CIRCLE);
             Map<String,Object> map = parseCircleOrArc(Graphic.GRAPHIC_TYPE_CIRCLE, circle.getCenterPoint(), circle.getRadius(), 0d, 360d);
             graphic.setPointCount((BigInteger)map.get(MAP_KEY_COUNT));
-            graphic.setGpsList((String)map.get(MAP_KEY_GPS));
-            graphic.setGcj02List((String)map.get(MAP_KEY_GCJ02));
-            if(StringUtils.isNotBlank(graphic.getGpsList())){
+            graphic.setPointList((String)map.get(MAP_KEY_POINT));
+            if(StringUtils.isNotBlank(graphic.getPointList())){
                 list.add(graphic);
             }
         }
@@ -136,9 +132,8 @@ public class GraphicConverter {
             graphic.setType(Graphic.GRAPHIC_TYPE_CIRCLE);
             Map<String,Object> map = parseCircleOrArc(Graphic.GRAPHIC_TYPE_ARC, arc.getCenterPoint(), arc.getRadius(), arc.getStartAngle(), arc.getEndAngle());
             graphic.setPointCount((BigInteger)map.get(MAP_KEY_COUNT));
-            graphic.setGpsList((String)map.get(MAP_KEY_GPS));
-            graphic.setGcj02List((String)map.get(MAP_KEY_GCJ02));
-            if(StringUtils.isNotBlank(graphic.getGpsList())){
+            graphic.setPointList((String)map.get(MAP_KEY_POINT));
+            if(StringUtils.isNotBlank(graphic.getPointList())){
                 list.add(graphic);
             }
         }
@@ -163,9 +158,8 @@ public class GraphicConverter {
             points.add(mText.getPoint());
             Map<String,Object> map = pointsToStr(points);
             graphic.setPointCount((BigInteger)map.get(MAP_KEY_COUNT));
-            graphic.setGpsList((String)map.get(MAP_KEY_GPS));
-            graphic.setGcj02List((String)map.get(MAP_KEY_GCJ02));
-            if(StringUtils.isNotBlank(graphic.getGpsList())){
+            graphic.setPointList((String)map.get(MAP_KEY_POINT));
+            if(StringUtils.isNotBlank(graphic.getPointList())){
                 list.add(graphic);
             }
         }
@@ -190,9 +184,8 @@ public class GraphicConverter {
             points.add(text.getPoint());
             Map<String,Object> map = pointsToStr(points);
             graphic.setPointCount((BigInteger)map.get(MAP_KEY_COUNT));
-            graphic.setGpsList((String)map.get(MAP_KEY_GPS));
-            graphic.setGcj02List((String)map.get(MAP_KEY_GCJ02));
-            if(StringUtils.isNotBlank(graphic.getGpsList())){
+            graphic.setPointList((String)map.get(MAP_KEY_POINT));
+            if(StringUtils.isNotBlank(graphic.getPointList())){
                 list.add(graphic);
             }
         }
@@ -214,9 +207,8 @@ public class GraphicConverter {
             graphic.setFillColor(getFillColor(polyLine.getHandleId()).getColorRGBStr());
             Map<String,Object> map = convertVertex(polyLine.getPolylineFlag(), polyLine.getVertexCoordinates());
             graphic.setPointCount((BigInteger)map.get(MAP_KEY_COUNT));
-            graphic.setGpsList((String)map.get(MAP_KEY_GPS));
-            graphic.setGcj02List((String)map.get(MAP_KEY_GCJ02));
-            if(StringUtils.isNotBlank(graphic.getGpsList())){
+            graphic.setPointList((String)map.get(MAP_KEY_POINT));
+            if(StringUtils.isNotBlank(graphic.getPointList())){
                 list.add(graphic);
             }
         }
@@ -238,10 +230,9 @@ public class GraphicConverter {
             graphic.setFillColor(getFillColor(lwPolyLine.getHandleId()).getColorRGBStr());
             Map<String,Object> map = convertVertex(lwPolyLine.getPolylineFlag(), lwPolyLine.getVertexCoordinates());
             graphic.setPointCount((BigInteger)map.get(MAP_KEY_COUNT));
-            graphic.setGpsList((String) map.get(MAP_KEY_GPS));
-            graphic.setGcj02List((String)map.get(MAP_KEY_GCJ02));
+            graphic.setPointList((String) map.get(MAP_KEY_POINT));
 
-            if(StringUtils.isNotBlank(graphic.getGpsList())){
+            if(StringUtils.isNotBlank(graphic.getPointList())){
                 list.add(graphic);
             }
         }
@@ -261,35 +252,21 @@ public class GraphicConverter {
             graphic.setLayerName(line.getLayerName());
             graphic.setLineWidth(line.getLineWidth());
             graphic.setType(Graphic.GRAPHIC_TYPE_LINE);
-            Point gpsStart = transformPointGPS(line.getStartPoint());
-            Point gcj02Start = transformPointGCJ02(gpsStart);
-            Point gpsEnd = transformPointGPS(line.getEndPoint());
-            Point gcj02End = transformPointGCJ02(gpsEnd);
+            Point pointStart = transformPointGPS(line.getStartPoint());
+            Point pointEnd = transformPointGPS(line.getEndPoint());
 
             StringBuffer gpsListStr = new StringBuffer();
-            StringBuffer gcj02ListStr = new StringBuffer();
-
-            gpsListStr.append(String.format(LLSCALEFORMAT, gpsStart.getX()));
+            gpsListStr.append(String.format(LLSCALEFORMAT, pointStart.getX()));
             gpsListStr.append(",");
-            gpsListStr.append(String.format(LLSCALEFORMAT, gpsStart.getY()));
+            gpsListStr.append(String.format(LLSCALEFORMAT, pointStart.getY()));
             gpsListStr.append(";");
-            gpsListStr.append(String.format(LLSCALEFORMAT, gpsEnd.getX()));
+            gpsListStr.append(String.format(LLSCALEFORMAT, pointEnd.getX()));
             gpsListStr.append(",");
-            gpsListStr.append(String.format(LLSCALEFORMAT, gpsEnd.getY()));
-            
-            gcj02ListStr.append(String.format(LLSCALEFORMAT, gcj02Start.getX()));
-            gcj02ListStr.append(",");
-            gcj02ListStr.append(String.format(LLSCALEFORMAT, gcj02Start.getY()));
-            gcj02ListStr.append(";");
-            gcj02ListStr.append(String.format(LLSCALEFORMAT, gcj02End.getX()));
-            gcj02ListStr.append(",");
-            gcj02ListStr.append(String.format(LLSCALEFORMAT, gcj02End.getY()));
-            
-            graphic.setGpsList(gpsListStr.toString());
-            graphic.setGcj02List(gcj02ListStr.toString());
+            gpsListStr.append(String.format(LLSCALEFORMAT, pointEnd.getY()));
+            graphic.setPointList(gpsListStr.toString());
             graphic.setPointCount(new BigInteger("2"));
 
-            if(StringUtils.isNotBlank(graphic.getGpsList())){
+            if(StringUtils.isNotBlank(graphic.getPointList())){
                 list.add(graphic);
             }
         }
@@ -421,8 +398,7 @@ public class GraphicConverter {
             map = new HashMap<>();
             map.put(MAP_KEY_POINTS, new ArrayList<Point>());
             map.put(MAP_KEY_COUNT, new BigInteger( "0"));
-            map.put(MAP_KEY_GPS, "");
-            map.put(MAP_KEY_GCJ02, "");
+            map.put(MAP_KEY_POINT, "");
         }
         return map;
     }
@@ -744,30 +720,22 @@ public class GraphicConverter {
         try{
 
             StringBuffer gpsListStr = new StringBuffer();
-            StringBuffer gcj02ListStr = new StringBuffer();
             Iterator<Point> itr = list.iterator();
             while (itr.hasNext()){
                 Point point = itr.next();
                 Point gpsPoint = transformPointGPS(point);
-                Point gcj02Point = transformPointGCJ02(gpsPoint);
                 gpsListStr.append(String.format(LLSCALEFORMAT, gpsPoint.getX()));
                 gpsListStr.append(",");
                 gpsListStr.append(String.format(LLSCALEFORMAT, gpsPoint.getY()));
-                gcj02ListStr.append(String.format(LLSCALEFORMAT, gcj02Point.getX()));
-                gcj02ListStr.append(",");
-                gcj02ListStr.append(String.format(LLSCALEFORMAT, gcj02Point.getY()));
                 if(itr.hasNext()) {
                     gpsListStr.append(";");
-                    gcj02ListStr.append(";");
                 }
             }
             map.put(MAP_KEY_COUNT, new BigInteger(list.size() + ""));
-            map.put(MAP_KEY_GPS, gpsListStr.toString());
-            map.put(MAP_KEY_GCJ02, gcj02ListStr.toString());
+            map.put(MAP_KEY_POINT, gpsListStr.toString());
         }catch (Exception e){
             map.put(MAP_KEY_COUNT, new BigInteger("0"));
-            map.put(MAP_KEY_GPS, "");
-            map.put(MAP_KEY_GCJ02, "");
+            map.put(MAP_KEY_POINT, "");
         }
         return map;
     }
