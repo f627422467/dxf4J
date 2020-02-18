@@ -13,10 +13,10 @@ import java.util.*;
  */
 public class GraphicConverter {
 
-    private static final String LLSCALEFORMAT = "%.6f";
-    private static final String MAP_KEY_COUNT = "count";
-    private static final String MAP_KEY_POINT = "point";
-    private static final String MAP_KEY_POINTS = "list";
+    public static final String LLSCALEFORMAT = "%.6f";
+    public static final String MAP_KEY_COUNT = "count";
+    public static final String MAP_KEY_POINT = "point";
+    public static final String MAP_KEY_POINTS = "list";
 
     // 多段线闭合flag值
     private static final int POLYLINE_FLAG_CLOSED = 1;
@@ -277,7 +277,7 @@ public class GraphicConverter {
      * @param vertices
      * @return
      */
-    private Map<String,Object> convertVertex(Integer flag, List<Vertex> vertices){
+    public static Map<String,Object> convertVertex(Integer flag, List<Vertex> vertices){
         Map<String,Object> map = new HashMap<>();
         Iterator<Vertex> itr = vertices.iterator();
         List<Point> list = new ArrayList<>();
@@ -362,7 +362,7 @@ public class GraphicConverter {
      * @param end 结束
      * @return
      */
-    private Map<String,Object> parseCircleOrArc(int type, Point center, Double radius, Double start, Double end){
+    public static Map<String,Object> parseCircleOrArc(int type, Point center, Double radius, Double start, Double end){
         Map<String,Object> map;
         try{
             // 圆弧开始结束角度 有可能为start:200,end:20
@@ -407,7 +407,7 @@ public class GraphicConverter {
      * @param point
      * @return
      */
-    private Point transformPointGPS(Point point){
+    public static Point transformPointGPS(Point point){
         Point rst = null;
         if(point != null && point.getX() != null && point.getY() != null){
             double[] ll = Transform.XYToLL(point.getX(), point.getY());
@@ -440,7 +440,7 @@ public class GraphicConverter {
      * @param pre  上一结点
      * @return
      */
-    private List<Point> getPointsOnTuDoArc(Vertex current, Vertex pre){
+    public static List<Point> getPointsOnTuDoArc(Vertex current, Vertex pre){
         List<Point> list;
         Point currentPoint = current.getLocationPoint();
         Point prePoint = pre.getLocationPoint();
@@ -464,7 +464,7 @@ public class GraphicConverter {
      * @param data
      * @return
      */
-    private List<Point> sortPointListNearBy(Point from, Point target, List<Point> data){
+    public static List<Point> sortPointListNearBy(Point from, Point target, List<Point> data){
         List<Point> list ;
         if(data == null || data.size() == 0){
             list = new ArrayList<>();
@@ -494,7 +494,7 @@ public class GraphicConverter {
      * @param end
      * @return
      */
-    public List<Point> getPointsOnCircleOrArc(int count, Point center, Double radius, Double start, Double end){
+    public static List<Point> getPointsOnCircleOrArc(int count, Point center, Double radius, Double start, Double end){
         List<Point> list = new ArrayList<>();
         Double dlt = (end - start) / (count + 1) * 1.0;
         Double angle = start;
@@ -585,7 +585,7 @@ public class GraphicConverter {
      * @param angle
      * @return
      */
-    public Point getPointOnCircle(Point center, Double radius, Double angle){
+    public static Point getPointOnCircle(Point center, Double radius, Double angle){
         Point rst = new Point();
         Double x = center.getX() + radius * Math.cos(angle * Math.PI / 180);
         Double y = center.getY() + radius * Math.sin(angle * Math.PI / 180);
@@ -714,7 +714,7 @@ public class GraphicConverter {
      * @param list
      * @return
      */
-    private Map<String,Object> pointsToStr(List<Point> list){
+    public static Map<String,Object> pointsToStr(List<Point> list){
         Map<String,Object> map = new HashMap<>();
         try{
 

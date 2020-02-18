@@ -20,6 +20,7 @@ public class Graphic {
     public static final int GRAPHIC_TYPE_ELLIPSE = 8;
     public static final int GRAPHIC_TYPE_TEXT = 9;
     public static final int GRAPHIC_TYPE_MTEXT = 10;
+    public static final int GRAPHIC_TYPE_AcDbPOLYLINE = 11;
 
     /**
      * 类型
