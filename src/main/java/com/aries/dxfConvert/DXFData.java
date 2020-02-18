@@ -17,6 +17,7 @@ public class DXFData {
 
     private List<Line> lines;
     private List<LwPolyLine> lwPolyLines;
+    private List<AcDbPolyLine> acDbPolyLines;
     private List<PolyLine> polyLines;
     private List<Text> texts;
     private List<MText> mTexts;
@@ -30,6 +31,7 @@ public class DXFData {
     public DXFData() {
         lines = new ArrayList<>();
         lwPolyLines = new ArrayList<>();
+        acDbPolyLines = new ArrayList<>();
         polyLines = new ArrayList<>();
         texts = new ArrayList<>();
         mTexts = new ArrayList<>();
@@ -145,11 +147,20 @@ public class DXFData {
         this.hatches = hatches;
     }
 
+    public List<AcDbPolyLine> getAcDbPolyLines() {
+        return acDbPolyLines;
+    }
+
+    public void setAcDbPolyLines(List<AcDbPolyLine> acDbPolyLines) {
+        this.acDbPolyLines = acDbPolyLines;
+    }
+
     @Override
     public String toString() {
         return "{" +
                 "lines:" + lines.size() +
                 ", lwPolyLines:" + lwPolyLines.size() +
+                ", acDbPolyLines:" + acDbPolyLines.size() +
                 ", polyLines:" + polyLines.size() +
                 ", tests:" + texts.size() +
                 ", arcs:" + arcs.size() +

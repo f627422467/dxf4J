@@ -99,6 +99,9 @@ public class Parser {
                 case "LWPOLYLINE":
                     code = parseLwPolyLine(bufferedReader, data.getLwPolyLines());
                     break;
+                case "AcDbPolyline":
+                    code = parseAcDbPolyLine(bufferedReader, data.getAcDbPolyLines());
+                    break;
                 case "POLYLINE":
                     code = parsePolyLine(bufferedReader, data.getPolyLines());
                     break;
@@ -359,6 +362,70 @@ public class Parser {
             circle.setCenterPoint(centerPoint);
             circle.setColor(color);
             list.add(circle);
+        }
+        return code;
+    }
+
+    /**
+     * 矩形
+     * @param bufferedReader
+     * @param list
+     * @return
+     */
+    private String[] parseAcDbPolyLine(BufferedReader bufferedReader, List<AcDbPolyLine> list){
+        String[] code = readGroupCode(bufferedReader);
+        AcDbPolyLine acDbPolyLine = new AcDbPolyLine();
+        Color color = new Color();
+        Vertex vertex = null;
+        List<Vertex> vertices = new ArrayList<>();
+        while(code[1] != null && !DXF_ENDSEC.equalsIgnoreCase(code[1])){
+            switch (code[0]){
+                case "8":
+                    acDbPolyLine.setLayerName(code[1]);
+                    break;
+                case "10":
+                    if(vertex != null){
+                        vertices.add(vertex);
+                    }
+                    vertex = new Vertex();
+                    vertex.setLocationPoint(new Point(Double.parseDouble(code[1]), 0d));
+                    break;
+                case "20":
+                    vertex.getLocationPoint().setY(Double.parseDouble(code[1]));
+                    break;
+                case "42":
+                    // 凸度
+                    vertex.setBulge(Double.parseDouble(code[1]));
+                    break;
+                case "62":
+                    color.setColor(Integer.parseInt(code[1]));
+                    acDbPolyLine.setColor(color);
+                    break;
+                case "70":
+                    acDbPolyLine.setPolylineFlag(Integer.parseInt(code[1]));
+                    break;
+                case "90":
+                    acDbPolyLine.setVerticesNum(Integer.parseInt(code[1]));
+                    break;
+                case "102":
+                    // handleId
+                    Code102 code102 = parseCode102(bufferedReader, code);
+                    acDbPolyLine.setHandleId(code102.getSpID());
+                    break;
+                case "0":
+                    if(vertex != null){
+                        vertices.add(vertex);
+                    }
+                    acDbPolyLine.setVertexCoordinates(vertices);
+                    list.add(acDbPolyLine);
+                    return code;
+            }
+            code = readGroupCode(bufferedReader);
+        }
+        if(DXF_ENDSEC.equalsIgnoreCase(code[1]) && vertex!=null){
+            vertices.add(vertex);
+            acDbPolyLine.setVertexCoordinates(vertices);
+            list.add(acDbPolyLine);
         }
         return code;
     }

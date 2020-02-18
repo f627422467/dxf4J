@@ -40,7 +40,6 @@ public class GraphicConverter {
         convertCircle(data.getCircles(), list);
         convertEllipse(data.getEllipses(), list);
         convertSpline(data.getSplines(), list);
-
         return list;
     }
 
